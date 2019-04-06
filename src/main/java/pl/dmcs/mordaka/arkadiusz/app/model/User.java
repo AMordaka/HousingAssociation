@@ -56,7 +56,7 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Local> locals;
 
     @Override

@@ -10,6 +10,8 @@ import pl.dmcs.mordaka.arkadiusz.app.repository.AddressRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
 import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -45,5 +47,10 @@ public class UserServiceImpl implements UserService {
             userName = principal.toString();
         }
         return userName;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
