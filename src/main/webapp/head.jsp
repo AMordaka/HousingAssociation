@@ -21,6 +21,9 @@
     <script src="static/vendor/datatables/jquery.dataTables.js"></script>
     <script src="static/vendor/datatables/dataTables.bootstrap4.js"></script>
 
+    <!-- Captcha Google -->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="static/js/sb-admin.min.js"></script>
 

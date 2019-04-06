@@ -31,6 +31,7 @@
         <lombok.version>1.18.6</lombok.version>
         <appache.commons.version>2.1.1</appache.commons.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <javax.json.version>1.0.2</javax.json.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -164,6 +165,11 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${javax.validation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>${javax.json.version}</version>
         </dependency>
     </dependencies>
 

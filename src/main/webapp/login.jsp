@@ -7,6 +7,11 @@
         <div class="card-header">Login</div>
         <div class="card-body">
             <form action="/login" method="post">
+                <c:if test="${param.error != null}">
+                    <div class="alert alert-danger">
+                        <spring:message code="invalid.username.or.password"/>
+                    </div>
+                </c:if>
                 <div class="form-group">
                     <div class="form-label-group">
                         <input type="text" id="email" class="form-control" placeholder="Email address"
