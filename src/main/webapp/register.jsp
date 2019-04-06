@@ -55,9 +55,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="g-recaptcha"
-                     data-sitekey="6LebZ5gUAAAAAORzMQdwx0sIckP0J4lomPutIbs4"></div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <div class="g-recaptcha"
+                             data-sitekey="6LebZ5gUAAAAAORzMQdwx0sIckP0J4lomPutIbs4"></div>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message
+                        code="register"></spring:message></button>
             </form:form>
         </div>
     </div>

@@ -33,6 +33,6 @@
 
 </div>
 <!-- /#wrapper -->
-<%@include file="login_section.jsp" %>
+<%@include file="logout.jsp" %>
 </body>
 </html>
