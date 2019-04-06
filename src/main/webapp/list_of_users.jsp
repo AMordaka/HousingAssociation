@@ -15,7 +15,10 @@
         </div>
         <!-- /.container-fluid -->
 
-        <table class="table table-hover">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th><spring:message code="firstName"/></th>
@@ -32,13 +35,17 @@
                     <td>${user.firstName}</td>
                     <td>${user.lastName}</td>
                     <td>${user.email}</td>
-                    <td>${user.isActive}</td>
+                    <td><c:choose><c:when test="${user.isActive}"><spring:message code="active"></spring:message></c:when><c:otherwise><spring:message code="inactive"></spring:message></c:otherwise></c:choose></td>
                     <td>${user.roles}</td>
                     <td><spring:message code="show.locals"></spring:message></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -54,6 +61,6 @@
 
 </div>
 <!-- /#wrapper -->
-<%@include file="login_section.jsp" %>
+<%@include file="logout.jsp" %>
 </body>
 </html>
