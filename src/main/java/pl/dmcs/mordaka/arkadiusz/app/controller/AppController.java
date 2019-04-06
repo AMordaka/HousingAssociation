@@ -1,6 +1,5 @@
 package pl.dmcs.mordaka.arkadiusz.app.controller;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +30,7 @@ public class AppController {
     private static final String REGISTER = "register";
     private static final String REDIRECT_HOMEPAGE = "redirect:/";
     private static final String RECAPTCHA = "g-recaptcha-response";
+    private static final String LIST_OF_USERS = "list_of_users";
 
     private final UserService userService;
     private final RoleService roleService;
@@ -71,6 +71,12 @@ public class AppController {
         }
         userService.registerUser(user);
         return LOGIN;
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String listOfUsers(ModelMap model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return LIST_OF_USERS;
     }
 
     private boolean isCurrentAuthenticationAnonymous() {
