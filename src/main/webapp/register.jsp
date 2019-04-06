@@ -54,8 +54,9 @@
                         <div class="has-error">
                         </div>
                     </div>
-
                 </div>
+                <div class="g-recaptcha"
+                     data-sitekey="6LebZ5gUAAAAAORzMQdwx0sIckP0J4lomPutIbs4"></div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form:form>
         </div>
