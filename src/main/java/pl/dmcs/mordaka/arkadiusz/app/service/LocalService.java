@@ -7,4 +7,8 @@ import java.util.List;
 public interface LocalService {
 
     List<Local> getAllLocals();
+
+    void registerLocal(Local local);
+
+
 }

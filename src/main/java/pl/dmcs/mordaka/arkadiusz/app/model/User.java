@@ -58,7 +58,7 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = {CascadeType.PERSIST})
     private Set<Local> locals;
 
     @Override
@@ -89,5 +89,10 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return this.getIsActive();
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + ", " + address;
     }
 }

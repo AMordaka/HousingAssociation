@@ -12,7 +12,10 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import pl.dmcs.mordaka.arkadiusz.app.converter.BuildingToBuildingView;
+import pl.dmcs.mordaka.arkadiusz.app.converter.LocalToLocalView;
 import pl.dmcs.mordaka.arkadiusz.app.converter.RoleToRoleView;
+import pl.dmcs.mordaka.arkadiusz.app.converter.UserToUserView;
 
 @Configuration
 @EnableWebMvc
@@ -20,9 +23,15 @@ import pl.dmcs.mordaka.arkadiusz.app.converter.RoleToRoleView;
 public class WebConfig implements WebMvcConfigurer {
 
     private final RoleToRoleView roleToRoleView;
+    private final BuildingToBuildingView buildingtoBuildingView;
+    private final UserToUserView userToUserView;
+    private final LocalToLocalView localToLocalView;
 
-    public WebConfig(RoleToRoleView roleToRoleView) {
+    public WebConfig(RoleToRoleView roleToRoleView, BuildingToBuildingView buildingtoBuildingView, UserToUserView userToUserView, LocalToLocalView localToLocalView) {
         this.roleToRoleView = roleToRoleView;
+        this.buildingtoBuildingView = buildingtoBuildingView;
+        this.userToUserView = userToUserView;
+        this.localToLocalView = localToLocalView;
     }
 
     @Override
@@ -75,5 +84,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(roleToRoleView);
+        registry.addConverter(buildingtoBuildingView);
+        registry.addConverter(userToUserView);
+        registry.addConverter(localToLocalView);
     }
 }
