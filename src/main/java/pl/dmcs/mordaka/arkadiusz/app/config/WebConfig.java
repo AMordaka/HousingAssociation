@@ -5,17 +5,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import pl.dmcs.mordaka.arkadiusz.app.converter.RoleToRoleView;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "pl.dmcs.mordaka.arkadiusz.app")
 public class WebConfig implements WebMvcConfigurer {
+
+    private final RoleToRoleView roleToRoleView;
+
+    public WebConfig(RoleToRoleView roleToRoleView) {
+        this.roleToRoleView = roleToRoleView;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -62,5 +70,10 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setCookieDomain("myAppLocaleCookie");
         resolver.setCookieMaxAge(60 * 60);
         return resolver;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(roleToRoleView);
     }
 }

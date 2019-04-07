@@ -50,7 +50,8 @@ public class User extends BaseEntity implements UserDetails {
     private Boolean isActive = false;
 
     @NotEmpty
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE,
+            CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLES_T",
             joinColumns = {@JoinColumn(name = "USER_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})

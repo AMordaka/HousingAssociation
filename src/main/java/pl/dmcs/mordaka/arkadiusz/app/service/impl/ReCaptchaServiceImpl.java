@@ -1,5 +1,7 @@
 package pl.dmcs.mordaka.arkadiusz.app.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.dmcs.mordaka.arkadiusz.app.service.ReCaptchaService;
 
@@ -12,6 +14,8 @@ import java.net.URL;
 
 @Service
 public class ReCaptchaServiceImpl implements ReCaptchaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReCaptchaServiceImpl.class);
 
     private static final String URL = "https://www.google.com/recaptcha/api/siteverify";
     private static final String GOOGLE_KEY = "6LebZ5gUAAAAAGBqePfT9EoQoBWYPhjxP64Rny1l";
@@ -42,9 +46,9 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
             wr.close();
 
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + URL);
-            System.out.println("Post parameters : " + postParams);
-            System.out.println("Response Code : " + responseCode);
+            logger.info("\nSending 'POST' request to URL : " + URL);
+            logger.info("Post parameters : " + postParams);
+            logger.info("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
@@ -56,8 +60,7 @@ public class ReCaptchaServiceImpl implements ReCaptchaService {
             }
             in.close();
 
-            // print result
-            System.out.println(response.toString());
+            logger.info(response.toString());
 
             //parse JSON response and return 'success' value
             JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));

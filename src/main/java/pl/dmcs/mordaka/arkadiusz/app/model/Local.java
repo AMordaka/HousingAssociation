@@ -25,6 +25,9 @@ public class Local extends BaseEntity {
     @Column(name = "IS_HOUSING", nullable = false)
     private Boolean isHousing;
 
+    @Column(name = "SURFACE_AREA", nullable = false)
+    private String surfaceArea;
+
     @OneToMany
-    private Set<Charge> charegs;
+    private Set<Charge> charges;
 }
