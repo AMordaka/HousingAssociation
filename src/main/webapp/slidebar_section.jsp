@@ -17,9 +17,14 @@
             <span><spring:message code="add.building"></spring:message></span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="locals">
+        <a class="nav-link" href="/addlocal">
             <i class="fas fa-fw fa-home"></i>
             <span><spring:message code="add.local"></spring:message></span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="/assign">
+            <i class="fas fa-fw fa-plug"></i>
+            <span><spring:message code="assign.to.user"></spring:message></span></a>
     </li>
     <li class="nav-item active">
         <a class="nav-link" href="users">

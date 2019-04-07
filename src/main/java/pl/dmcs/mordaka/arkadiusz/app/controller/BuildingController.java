@@ -26,7 +26,6 @@ public class BuildingController {
 
     @RequestMapping(value = "/buildings", method = RequestMethod.GET)
     public String listOfUsers(ModelMap model) {
-        model.addAttribute("building", new Building());
         model.addAttribute("buildings", buildingService.getAllBuildings());
         return LIST_OF_BUILDINGS;
     }

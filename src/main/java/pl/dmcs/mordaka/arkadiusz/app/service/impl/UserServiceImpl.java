@@ -4,8 +4,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.dmcs.mordaka.arkadiusz.app.exception.LocalNotFoundException;
 import pl.dmcs.mordaka.arkadiusz.app.exception.UserNotFoundException;
+import pl.dmcs.mordaka.arkadiusz.app.model.DTO.UserLocalDTO;
+import pl.dmcs.mordaka.arkadiusz.app.model.Local;
 import pl.dmcs.mordaka.arkadiusz.app.model.User;
+import pl.dmcs.mordaka.arkadiusz.app.repository.LocalRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
 import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 
@@ -16,10 +20,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LocalRepository localRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, LocalRepository localRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.localRepository = localRepository;
+    }
+
+    @Override
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(String.valueOf(id)));
     }
 
     @Override
@@ -49,5 +60,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void assignUserToLocal(UserLocalDTO dto) {
+        User user = userRepository.findById(dto.getUser().getId()).orElseThrow(() -> new UserNotFoundException(String.valueOf(dto)));
+        Local local = localRepository.findById(dto.getLocal().getId()).orElseThrow(() -> new LocalNotFoundException(String.valueOf(dto)));
+        local.setUser(user);
+        local.setIsRented(true);
+        localRepository.save(local);
     }
 }

@@ -1,17 +1,17 @@
 package pl.dmcs.mordaka.arkadiusz.app.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "LOCAL_T")
 @AllArgsConstructor
@@ -25,9 +25,23 @@ public class Local extends BaseEntity {
     @Column(name = "IS_HOUSING", nullable = false)
     private Boolean isHousing;
 
+    @Column(name = "IS_RENTED")
+    private Boolean isRented = false;
+
     @Column(name = "SURFACE_AREA", nullable = false)
     private String surfaceArea;
 
+    @ManyToOne
+    private Building building;
+
     @OneToMany
-    private Set<Charge> charges;
+    private Set<Charge> charges = new HashSet<>();
+
+    @ManyToOne
+    private User user;
+
+    @Override
+    public String toString() {
+        return building + " - " + number + " | " + surfaceArea + " m^2";
+    }
 }
