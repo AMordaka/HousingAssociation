@@ -38,8 +38,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    @NotEmpty
+    @Column(name = "ADDRESS", nullable = false)
+    private String address;
 
     @NotEmpty
     @Email

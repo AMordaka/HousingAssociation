@@ -46,7 +46,13 @@
                         <label for="inputPassword"><spring:message code="password"></spring:message></label>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <form:input type="text" id="inputAddress" class="form-control" placeholder="Adres"
+                                    required="required" path="address"/>
+                        <label for="inputAddress"><spring:message code="address"></spring:message></label>
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="form-label-group">
                         <form:select path="roles" id="userRoles" items="${roles}" multiple="true" itemValue="id"
