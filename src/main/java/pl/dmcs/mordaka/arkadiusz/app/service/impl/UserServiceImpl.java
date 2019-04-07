@@ -14,6 +14,7 @@ import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
 import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,6 +61,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getActivatedUsers() {
+        return userRepository.findAll().stream().filter(User::getIsActive).collect(Collectors.toList());
     }
 
     @Override

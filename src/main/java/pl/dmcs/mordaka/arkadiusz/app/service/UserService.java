@@ -17,5 +17,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
+    List<User> getActivatedUsers();
+
     void assignUserToLocal(UserLocalDTO dto);
 }

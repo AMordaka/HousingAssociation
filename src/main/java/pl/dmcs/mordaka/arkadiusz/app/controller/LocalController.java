@@ -65,8 +65,8 @@ public class LocalController {
 
     @RequestMapping(value = "/assign", method = RequestMethod.GET)
     public String assignPage(ModelMap model) {
-        model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("locals", localService.getAllLocals());
+        model.addAttribute("users", userService.getActivatedUsers());
+        model.addAttribute("locals", localService.getNotRentedLocals());
         model.addAttribute("dto", new UserLocalDTO());
         return ASSIGN_LOCAL_TO_USER;
     }
