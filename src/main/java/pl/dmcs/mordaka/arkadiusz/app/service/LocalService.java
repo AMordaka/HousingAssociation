@@ -10,5 +10,6 @@ public interface LocalService {
 
     void registerLocal(Local local);
 
+    List<Local> getNotRentedLocals();
 
 }

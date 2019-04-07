@@ -7,6 +7,7 @@ import pl.dmcs.mordaka.arkadiusz.app.repository.LocalRepository;
 import pl.dmcs.mordaka.arkadiusz.app.service.LocalService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,5 +27,10 @@ public class LocalServiceImpl implements LocalService {
     @Override
     public void registerLocal(Local local) {
         localRepository.save(local);
+    }
+
+    @Override
+    public List<Local> getNotRentedLocals() {
+        return localRepository.findAll().stream().filter(local -> !local.getIsRented()).collect(Collectors.toList());
     }
 }
