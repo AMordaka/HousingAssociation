@@ -17,8 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Building extends BaseEntity {
 
-    @OneToOne
-    private Address addresses;
+    private String address;
 
     @OneToMany
     private Set<Local> locals;

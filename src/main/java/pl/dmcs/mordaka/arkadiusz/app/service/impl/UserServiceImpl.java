@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.dmcs.mordaka.arkadiusz.app.exception.UserNotFoundException;
 import pl.dmcs.mordaka.arkadiusz.app.model.User;
-import pl.dmcs.mordaka.arkadiusz.app.repository.AddressRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
 import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 
@@ -16,12 +15,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
