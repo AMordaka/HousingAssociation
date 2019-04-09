@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import pl.dmcs.mordaka.arkadiusz.app.model.Charge;
 import pl.dmcs.mordaka.arkadiusz.app.model.DTO.UserLocalDTO;
 import pl.dmcs.mordaka.arkadiusz.app.model.Local;
 import pl.dmcs.mordaka.arkadiusz.app.service.BuildingService;
@@ -22,6 +23,7 @@ public class LocalController {
     private static final String ADD_LOCAL = "add_local";
     private static final String REDIRECT_HOMEPAGE = "redirect:/";
     private static final String ASSIGN_LOCAL_TO_USER = "assign_local_to_user";
+    private static final String ADD_CHARGE = "add_charge";
 
     private final LocalService localService;
     private final BuildingService buildingService;
@@ -34,7 +36,7 @@ public class LocalController {
     }
 
     @RequestMapping(value = "/locals", method = RequestMethod.GET)
-    public String listOfUsers(ModelMap model) {
+    public String getListOfLocals(ModelMap model) {
         model.addAttribute("usersForModal", userService.getAllUsers());
         model.addAttribute("locals", localService.getAllLocals());
         return LIST_OF_LOCALS;
@@ -75,5 +77,23 @@ public class LocalController {
     public String assignPost(@Valid UserLocalDTO dto) {
         userService.assignUserToLocal(dto);
         return REDIRECT_HOMEPAGE;
+    }
+
+    @RequestMapping(value = "/charge-{localId}", method = RequestMethod.GET)
+    public String chargesPage(@PathVariable Integer localId, ModelMap model) {
+        model.addAttribute("charge", new Charge());
+        return ADD_CHARGE;
+    }
+
+    @RequestMapping(value = "/charge-{localId}", method = RequestMethod.POST)
+    public String chargesPost(@PathVariable Integer localId, @Valid Charge charge, ModelMap model) {
+        localService.fillLocalCharge(localId, charge);
+        return REDIRECT_HOMEPAGE;
+    }
+
+    @RequestMapping(value = "/mylocals", method = RequestMethod.GET)
+    public String myLocalsPage(ModelMap model) {
+        model.addAttribute("locals", localService.getUserLocals(userService.getPrincipal()));
+        return LIST_OF_LOCALS;
     }
 }

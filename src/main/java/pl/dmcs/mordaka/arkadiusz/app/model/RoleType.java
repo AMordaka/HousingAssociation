@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum RoleType {
     USER("USER"),
     ADMIN("ADMIN"),
-    DEALER("DEALER");
+    EMPLOYEE("EMPLOYEE");
 
     String role;
 

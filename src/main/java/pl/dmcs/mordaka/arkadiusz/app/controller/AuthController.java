@@ -7,12 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/")
 public class AuthController {
 
     private static final String LOGIN = "login";
     private static final String REDIRECT_HOMEPAGE = "redirect:/";
+    private static final String REDIRECT_HOMEPAGE_LOGOUT = "redirect:/homepage?logout";
 
     private final AuthenticationTrustResolver authenticationTrustResolver;
 
@@ -27,6 +31,15 @@ public class AuthController {
             return LOGIN;
         }
         return REDIRECT_HOMEPAGE;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+        }
+        return REDIRECT_HOMEPAGE_LOGOUT;
     }
 
     private boolean isCurrentAuthenticationAnonymous() {
