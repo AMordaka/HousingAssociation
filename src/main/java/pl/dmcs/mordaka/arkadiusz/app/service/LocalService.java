@@ -1,5 +1,6 @@
 package pl.dmcs.mordaka.arkadiusz.app.service;
 
+import pl.dmcs.mordaka.arkadiusz.app.model.Charge;
 import pl.dmcs.mordaka.arkadiusz.app.model.Local;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface LocalService {
 
     List<Local> getNotRentedLocals();
 
+    List<Local> getUserLocals(String userId);
+
+    void fillLocalCharge(Integer localId, Charge charge);
 }

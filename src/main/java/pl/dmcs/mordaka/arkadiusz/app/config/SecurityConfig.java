@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +29,17 @@ import pl.dmcs.mordaka.arkadiusz.app.service.CustomUserDetailsService;
 @ComponentScan(basePackages = "pl.dmcs.mordaka.arkadiusz.app")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_WHITE_LIST = {
+            "/**/*.png",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.jpg",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js",
+            "/console/**",
+    };
+
     private final CustomUserDetailsService customUserDetailsService;
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
@@ -42,14 +54,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/").permitAll();
 
-        http.authorizeRequests().antMatchers("/").access("hasAnyRole('ADMIN', 'DEALER','USER')").and().formLogin().loginPage("/login")
-                .loginProcessingUrl("/login").usernameParameter("email").passwordParameter("password").and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+        http.authorizeRequests().antMatchers("/login").permitAll().anyRequest().authenticated()
+                .and().formLogin().loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("email").passwordParameter("password").and().csrf();
 
-        http.csrf().disable();
         http.headers().frameOptions().disable();
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(AUTH_WHITE_LIST);
     }
 
     @Bean

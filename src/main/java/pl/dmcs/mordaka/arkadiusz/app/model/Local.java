@@ -19,7 +19,7 @@ import java.util.Set;
 public class Local extends BaseEntity {
 
     @NotEmpty
-    @Column(name = "NUMBER", unique = true, nullable = false)
+    @Column(name = "LOCAL_NUMBER", unique = true, nullable = false)
     private String number;
 
     @Column(name = "IS_HOUSING", nullable = false)
@@ -34,7 +34,7 @@ public class Local extends BaseEntity {
     @ManyToOne
     private Building building;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Set<Charge> charges = new HashSet<>();
 
     @ManyToOne

@@ -26,7 +26,12 @@
                             <th><spring:message code="is.housing"/></th>
                             <th><spring:message code="surface.area"/></th>
                             <th><spring:message code="building"/></th>
-                            <th><spring:message code="is.rented"/></th>
+                            <sec:authorize access="hasRole('ADMIN')">
+                                <th><spring:message code="is.rented"/></th>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('USER')">
+                                <th><spring:message code="options"/></th>
+                            </sec:authorize>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,11 +43,18 @@
                                         code="no"></spring:message></c:otherwise></c:choose></td>
                                 <td>${local.surfaceArea}</td>
                                 <td>${local.building}</td>
-                                <td><c:choose><c:when test="${local.isRented}"><spring:message
-                                        code="yes"></spring:message></c:when><c:otherwise><spring:message
-                                        code="no"></spring:message></c:otherwise></c:choose></td>
-                                <c:choose><c:when test="${local.isRented}"></c:when><c:otherwise>
-                                </c:otherwise></c:choose>
+                                <sec:authorize access="hasRole('ADMIN')">
+                                    <td><c:choose><c:when test="${local.isRented}"><spring:message
+                                            code="yes"></spring:message></c:when><c:otherwise><spring:message
+                                            code="no"></spring:message></c:otherwise></c:choose></td>
+                                    <c:choose><c:when test="${local.isRented}"></c:when><c:otherwise>
+                                    </c:otherwise></c:choose>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('USER')">
+
+                                    <td><a href="charge-${local.id}" class="btn btn-secondary btn-block"><spring:message
+                                            code="fill"></spring:message></a></td>
+                                </sec:authorize>
                             </tr>
                         </c:forEach>
                         </tbody>
