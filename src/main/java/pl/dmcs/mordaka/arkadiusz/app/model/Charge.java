@@ -19,22 +19,22 @@ public class Charge extends BaseEntity {
     @Column(name = "DATE_TIME")
     private LocalDate date = LocalDate.now();
 
-    @Column(name = "ELECTRICITY", nullable = false)
+    @Column(name = "ELECTRICITY")
     private Double electricity;
 
-    @Column(name = "GAS", nullable = false)
+    @Column(name = "GAS")
     private Double gas;
 
-    @Column(name = "COLD_WATER", nullable = false)
+    @Column(name = "COLD_WATER")
     private Double coldWater;
 
-    @Column(name = "HOT_WATER", nullable = false)
+    @Column(name = "HOT_WATER")
     private Double hotWater;
 
-    @Column(name = "SEWAGE", nullable = false)
+    @Column(name = "SEWAGE")
     private Double sewage;
 
-    @Column(name = "FUND_RENOVATION", nullable = false)
+    @Column(name = "FUND_RENOVATION")
     private Double foundRenovation;
 
     @Column(name = "IS_FILLED")
