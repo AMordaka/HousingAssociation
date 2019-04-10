@@ -42,6 +42,11 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span><spring:message code="locals"></spring:message></span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="rest">
+                <i class="fas fa-fw fa-info"></i>
+                <span><spring:message code="rest.controller"></spring:message></span></a>
+        </li>
     </sec:authorize>
     <li class="nav-item active">
         <a class="nav-link" href="mylocals">
