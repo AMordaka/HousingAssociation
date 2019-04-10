@@ -16,7 +16,6 @@ public class AuthController {
 
     private static final String LOGIN = "login";
     private static final String REDIRECT_HOMEPAGE = "redirect:/";
-    private static final String REDIRECT_HOMEPAGE_LOGOUT = "redirect:/homepage?logout";
 
     private final AuthenticationTrustResolver authenticationTrustResolver;
 
@@ -39,7 +38,7 @@ public class AuthController {
         if (auth != null) {
             SecurityContextHolder.getContext().setAuthentication(null);
         }
-        return REDIRECT_HOMEPAGE_LOGOUT;
+        return REDIRECT_HOMEPAGE;
     }
 
     private boolean isCurrentAuthenticationAnonymous() {
