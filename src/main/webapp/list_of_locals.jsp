@@ -29,7 +29,7 @@
                             <sec:authorize access="hasRole('ADMIN')">
                                 <th><spring:message code="is.rented"/></th>
                             </sec:authorize>
-                            <sec:authorize access="hasRole('USER')">
+                            <sec:authorize access="hasAnyRole('USER','EMPLOYEE')">
                                 <th><spring:message code="options"/></th>
                             </sec:authorize>
                         </tr>
@@ -47,13 +47,27 @@
                                     <td><c:choose><c:when test="${local.isRented}"><spring:message
                                             code="yes"></spring:message></c:when><c:otherwise><spring:message
                                             code="no"></spring:message></c:otherwise></c:choose></td>
-                                    <c:choose><c:when test="${local.isRented}"></c:when><c:otherwise>
-                                    </c:otherwise></c:choose>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('EMPLOYEE')">
+                                    <td>
+                                        <c:choose><c:when test="${local.isChargesFilled}">
+                                            <a href="confirmCharge-${local.id}"
+                                               class="btn btn-secondary btn-block"><spring:message
+                                                    code="confirm"></spring:message></a></c:when></c:choose>
+                                        <c:choose><c:when test="${local.isChargesAccepted}"><a
+                                                href="generatePdf-${local.id}"
+                                                class="btn btn-success btn-block"><spring:message
+                                                code="confirm"></spring:message></a></c:when></c:choose>
+
+                                    </td>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('USER')">
+                                    <c:choose><c:when test="${local.canFillCharges}">
+                                        <td><a href="charge-${local.id}"
+                                               class="btn btn-secondary btn-block"><spring:message
+                                                code="fill"></spring:message></a></td>
+                                    </c:when></c:choose>
 
-                                    <td><a href="charge-${local.id}" class="btn btn-secondary btn-block"><spring:message
-                                            code="fill"></spring:message></a></td>
                                 </sec:authorize>
                             </tr>
                         </c:forEach>

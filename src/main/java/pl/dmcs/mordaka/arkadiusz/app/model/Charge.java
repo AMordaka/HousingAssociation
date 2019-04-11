@@ -37,9 +37,4 @@ public class Charge extends BaseEntity {
     @Column(name = "FUND_RENOVATION")
     private Double foundRenovation;
 
-    @Column(name = "IS_FILLED")
-    private Boolean isFilled;
-
-    @Column(name = "IS_ACCEPTED")
-    private Boolean isAccepted;
 }

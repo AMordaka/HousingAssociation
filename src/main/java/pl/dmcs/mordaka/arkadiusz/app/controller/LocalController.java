@@ -37,14 +37,12 @@ public class LocalController {
 
     @RequestMapping(value = "/locals", method = RequestMethod.GET)
     public String getListOfLocals(ModelMap model) {
-        model.addAttribute("usersForModal", userService.getAllUsers());
         model.addAttribute("locals", localService.getAllLocals());
         return LIST_OF_LOCALS;
     }
 
     @RequestMapping(value = "/locals-{buildingId}", method = RequestMethod.GET)
     public String getAllLocalsFromBuildingId(@PathVariable String buildingId, ModelMap model) {
-        model.addAttribute("usersForModal", userService.getAllUsers());
         model.addAttribute("locals", buildingService.getLocalsFromBuilding(Integer.valueOf(buildingId)));
         return LIST_OF_LOCALS;
     }
@@ -83,6 +81,18 @@ public class LocalController {
     public String chargesPage(@PathVariable Integer localId, ModelMap model) {
         model.addAttribute("charge", new Charge());
         return ADD_CHARGE;
+    }
+
+    @RequestMapping(value = "/confirmCharge-{localId}", method = RequestMethod.GET)
+    public String confirmChargePage(@PathVariable Integer localId, ModelMap model) {
+        model.addAttribute("charge", localService.findLatesChargeFromLocal(localId));
+        return ADD_CHARGE;
+    }
+
+    @RequestMapping(value = "/confirmCharge-{localId}", method = RequestMethod.POST)
+    public String confirmChargePost(@PathVariable Integer localId, @Valid Charge charge, ModelMap model) {
+        localService.confirmCharges(localId, charge);
+        return REDIRECT_HOMEPAGE;
     }
 
     @RequestMapping(value = "/charge-{localId}", method = RequestMethod.POST)
