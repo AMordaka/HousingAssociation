@@ -34,6 +34,15 @@ public class Local extends BaseEntity {
     @ManyToOne
     private Building building;
 
+    @Column(name = "IS_FILLED")
+    private Boolean isChargesFilled;
+
+    @Column(name = "CAN_FILL_CHARGES")
+    private Boolean canFillCharges = true;
+
+    @Column(name = "IS_ACCEPTED")
+    private Boolean isChargesAccepted;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Set<Charge> charges = new HashSet<>();
 
