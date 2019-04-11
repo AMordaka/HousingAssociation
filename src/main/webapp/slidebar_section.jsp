@@ -48,9 +48,11 @@
                 <span><spring:message code="rest.controller"></spring:message></span></a>
         </li>
     </sec:authorize>
+    <sec:authorize access="hasRole('USER')">
     <li class="nav-item active">
         <a class="nav-link" href="mylocals">
             <i class="fas fa-fw fa-table"></i>
             <span><spring:message code="my.locals"></spring:message></span></a>
+        </sec:authorize>
     </li>
 </ul>

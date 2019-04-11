@@ -3,12 +3,24 @@
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
     </button>
+
+    <div>
+        <select id="locales">
+            <option value=""><spring:message code="language"></spring:message></option>
+            <option value="en">EN</option>
+            <option value="pl">PL</option>
+            <option value="ae">AE</option>
+        </select>
+    </div>
+
+
     <%@include file="search_section.jsp" %>
 
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user-circle fa-fw"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -21,3 +33,4 @@
     </ul>
 
 </nav>
+
