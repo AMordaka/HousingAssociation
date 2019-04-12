@@ -1,5 +1,6 @@
 package pl.dmcs.mordaka.arkadiusz.app.service.impl;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.dmcs.mordaka.arkadiusz.app.exception.ChargeNotFoundException;
@@ -10,8 +11,10 @@ import pl.dmcs.mordaka.arkadiusz.app.model.Local;
 import pl.dmcs.mordaka.arkadiusz.app.repository.ChargeRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.LocalRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
+import pl.dmcs.mordaka.arkadiusz.app.service.ChargeService;
 import pl.dmcs.mordaka.arkadiusz.app.service.LocalService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +26,13 @@ public class LocalServiceImpl implements LocalService {
     private final LocalRepository localRepository;
     private final UserRepository userRepository;
     private final ChargeRepository chargeRepository;
+    private final ChargeService chargeService;
 
-    public LocalServiceImpl(LocalRepository localRepository, UserRepository userRepository, ChargeRepository chargeRepository) {
+    public LocalServiceImpl(LocalRepository localRepository, UserRepository userRepository, ChargeRepository chargeRepository, ChargeService chargeService) {
         this.localRepository = localRepository;
         this.userRepository = userRepository;
         this.chargeRepository = chargeRepository;
+        this.chargeService = chargeService;
     }
 
     @Override
@@ -79,5 +84,46 @@ public class LocalServiceImpl implements LocalService {
     @Override
     public Local getLocalById(Integer localId) {
         return localRepository.findById(localId).orElseThrow(() -> new LocalNotFoundException(String.valueOf(localId)));
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 0 L * ? *")
+    public void generateAmounts() {
+        List<Local> locals = localRepository.findAll();
+        for (Local local : locals) {
+            if (!local.getIsChargesAccepted()) {
+                Charge charge;
+                if (local.getIsHousing()) {
+                    charge = getDefaultChargeForHousing(local);
+                } else {
+                    charge = getDefaultChargeForNotHousing(local);
+                }
+                local.setIsChargesFilled(true);
+                local.setCanFillCharges(false);
+                local.getCharges().add(charge);
+                chargeRepository.save(charge);
+                localRepository.save(local);
+            }
+        }
+    }
+
+    @Override
+    public void acceptAllCharges() {
+        List<Local> locals = localRepository.findAll();
+        for(Local local : locals){
+            local.setIsChargesAccepted(true);
+            local.setIsChargesFilled(false);
+            localRepository.save(local);
+        }
+    }
+
+    Charge getDefaultChargeForHousing(Local local) {
+        Double defaultDouble = Double.parseDouble("10");
+        return new Charge(LocalDate.now(), defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, local);
+    }
+
+    Charge getDefaultChargeForNotHousing(Local local) {
+        Double defaultDouble = Double.parseDouble("20");
+        return new Charge(LocalDate.now(), defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, defaultDouble, local);
     }
 }

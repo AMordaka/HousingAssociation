@@ -35,13 +35,13 @@ public class Local extends BaseEntity {
     private Building building;
 
     @Column(name = "IS_FILLED")
-    private Boolean isChargesFilled;
+    private Boolean isChargesFilled = false;
 
     @Column(name = "CAN_FILL_CHARGES")
     private Boolean canFillCharges = true;
 
     @Column(name = "IS_ACCEPTED")
-    private Boolean isChargesAccepted;
+    private Boolean isChargesAccepted = false;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Set<Charge> charges = new HashSet<>();

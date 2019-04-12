@@ -54,12 +54,24 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span><spring:message code="locals"></spring:message></span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="generateAmounts">
+                <i class="fas fa-fw fa-plus-circle"></i>
+                <span><spring:message code="generate.amount"></spring:message></span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="acceptAllChanges">
+                <i class="fas fa-fw fa-check-circle"></i>
+                <span><spring:message code="accept.all.charges"></spring:message></span></a>
+
+        </li>
     </sec:authorize>
     <sec:authorize access="hasRole('USER')">
-    <li class="nav-item active">
-        <a class="nav-link" href="mylocals">
-            <i class="fas fa-fw fa-table"></i>
-            <span><spring:message code="my.locals"></spring:message></span></a>
-    </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="mylocals">
+                <i class="fas fa-fw fa-table"></i>
+                <span><spring:message code="my.locals"></spring:message></span></a>
+        </li>
     </sec:authorize>
 </ul>
+
