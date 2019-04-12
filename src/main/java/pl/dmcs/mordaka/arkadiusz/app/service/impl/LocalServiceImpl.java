@@ -56,12 +56,13 @@ public class LocalServiceImpl implements LocalService {
         local.setIsChargesFilled(true);
         local.setCanFillCharges(false);
         local.getCharges().add(charge);
+        charge.setLocal(local);
         chargeRepository.save(charge);
         localRepository.save(local);
     }
 
     @Override
-    public Charge findLatesChargeFromLocal(Integer localId) {
+    public Charge findLatestChargeFromLocal(Integer localId) {
         Local local = localRepository.findById(localId).orElseThrow(() -> new LocalNotFoundException(String.valueOf(localId)));
         List<Charge> charges = new ArrayList<>(local.getCharges());
         return chargeRepository.findById(charges.get(charges.size() - 1).getId()).orElseThrow(() -> new ChargeNotFoundException(String.valueOf(localId)));
@@ -73,5 +74,10 @@ public class LocalServiceImpl implements LocalService {
         local.setIsChargesAccepted(true);
         local.setIsChargesFilled(false);
         localRepository.save(local);
+    }
+
+    @Override
+    public Local getLocalById(Integer localId) {
+        return localRepository.findById(localId).orElseThrow(() -> new LocalNotFoundException(String.valueOf(localId)));
     }
 }

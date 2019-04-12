@@ -7,6 +7,7 @@
         <div class="card-header"><spring:message code="add.building.to,association"></spring:message></div>
         <div class="card-body">
             <form:form method="POST" modelAttribute="charge" class="form-horizontal">
+
                 <div class="form-group">
                     <div class="form-label-group">
                         <form:input type="text" id="inputElectricity" class="form-control" placeholder="electricity"

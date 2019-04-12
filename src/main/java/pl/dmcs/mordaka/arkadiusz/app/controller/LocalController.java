@@ -85,7 +85,7 @@ public class LocalController {
 
     @RequestMapping(value = "/confirmCharge-{localId}", method = RequestMethod.GET)
     public String confirmChargePage(@PathVariable Integer localId, ModelMap model) {
-        model.addAttribute("charge", localService.findLatesChargeFromLocal(localId));
+        model.addAttribute("charge", localService.findLatestChargeFromLocal(localId));
         return ADD_CHARGE;
     }
 
