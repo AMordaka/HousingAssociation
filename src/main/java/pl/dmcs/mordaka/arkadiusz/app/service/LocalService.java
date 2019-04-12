@@ -17,7 +17,9 @@ public interface LocalService {
 
     void fillLocalCharge(Integer localId, Charge charge);
 
-    Charge findLatesChargeFromLocal(Integer localId);
+    Charge findLatestChargeFromLocal(Integer localId);
 
     void confirmCharges(Integer localId, Charge charge);
+
+    Local getLocalById(Integer localId);
 }

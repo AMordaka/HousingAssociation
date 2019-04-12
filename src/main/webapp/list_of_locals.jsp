@@ -57,7 +57,7 @@
                                         <c:choose><c:when test="${local.isChargesAccepted}"><a
                                                 href="generatePdf-${local.id}"
                                                 class="btn btn-success btn-block"><spring:message
-                                                code="confirm"></spring:message></a></c:when></c:choose>
+                                                code="generate.pdf"></spring:message></a></c:when></c:choose>
 
                                     </td>
                                 </sec:authorize>
