@@ -3,9 +3,7 @@ package pl.dmcs.mordaka.arkadiusz.app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import pl.dmcs.mordaka.arkadiusz.app.model.Charge;
 import pl.dmcs.mordaka.arkadiusz.app.model.DTO.UserLocalDTO;
 import pl.dmcs.mordaka.arkadiusz.app.model.Local;
@@ -16,6 +14,7 @@ import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 import javax.validation.Valid;
 
 @Controller
+@SessionAttributes("visible")
 @RequestMapping("/")
 public class LocalController {
 
@@ -90,13 +89,13 @@ public class LocalController {
     }
 
     @RequestMapping(value = "/confirmCharge-{localId}", method = RequestMethod.POST)
-    public String confirmChargePost(@PathVariable Integer localId, @Valid Charge charge, ModelMap model) {
+    public String confirmChargePost(@PathVariable Integer localId, @Valid Charge charge) {
         localService.confirmCharges(localId, charge);
         return REDIRECT_HOMEPAGE;
     }
 
     @RequestMapping(value = "/charge-{localId}", method = RequestMethod.POST)
-    public String chargesPost(@PathVariable Integer localId, @Valid Charge charge, ModelMap model) {
+    public String chargesPost(@PathVariable Integer localId, @Valid Charge charge) {
         localService.fillLocalCharge(localId, charge);
         return REDIRECT_HOMEPAGE;
     }
@@ -105,5 +104,17 @@ public class LocalController {
     public String myLocalsPage(ModelMap model) {
         model.addAttribute("locals", localService.getUserLocals(userService.getPrincipal()));
         return LIST_OF_LOCALS;
+    }
+
+    @RequestMapping(value = "/generateAmounts", method = RequestMethod.GET)
+    public String generateAmountsPage(ModelMap model) {
+        localService.generateAmounts();
+        return REDIRECT_HOMEPAGE;
+    }
+
+    @RequestMapping(value = "/acceptAllChanges", method = RequestMethod.GET)
+    public String acceptAllChangesPage() {
+        localService.acceptAllCharges();
+        return REDIRECT_HOMEPAGE;
     }
 }

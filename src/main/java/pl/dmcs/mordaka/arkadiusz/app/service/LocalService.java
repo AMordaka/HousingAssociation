@@ -22,4 +22,8 @@ public interface LocalService {
     void confirmCharges(Integer localId, Charge charge);
 
     Local getLocalById(Integer localId);
+
+    void generateAmounts();
+
+    void acceptAllCharges();
 }
