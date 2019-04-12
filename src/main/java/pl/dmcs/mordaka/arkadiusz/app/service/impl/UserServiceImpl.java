@@ -6,11 +6,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.dmcs.mordaka.arkadiusz.app.exception.LocalNotFoundException;
 import pl.dmcs.mordaka.arkadiusz.app.exception.UserNotFoundException;
+import pl.dmcs.mordaka.arkadiusz.app.model.ConfirmationToken;
 import pl.dmcs.mordaka.arkadiusz.app.model.DTO.UserLocalDTO;
 import pl.dmcs.mordaka.arkadiusz.app.model.Local;
 import pl.dmcs.mordaka.arkadiusz.app.model.User;
+import pl.dmcs.mordaka.arkadiusz.app.repository.ConfirmationTokenRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.LocalRepository;
 import pl.dmcs.mordaka.arkadiusz.app.repository.UserRepository;
+import pl.dmcs.mordaka.arkadiusz.app.service.MailSenderService;
 import pl.dmcs.mordaka.arkadiusz.app.service.UserService;
 
 import java.util.List;
@@ -19,14 +22,20 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final String REGISTERED_USER = "Rejestracja użytkownika";
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final LocalRepository localRepository;
+    private final MailSenderService mailSenderService;
+    private final ConfirmationTokenRepository tokenRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, LocalRepository localRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, LocalRepository localRepository, MailSenderService mailSenderService, ConfirmationTokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.localRepository = localRepository;
+        this.mailSenderService = mailSenderService;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -43,6 +52,10 @@ public class UserServiceImpl implements UserService {
     public void registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+        tokenRepository.save(confirmationToken);
+        mailSenderService.sendEmail(user.getEmail(), REGISTERED_USER, "Aby potwierdzić rejestrację proszę klinknąć na link : "
+                + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
     }
 
     @Override
@@ -75,5 +88,14 @@ public class UserServiceImpl implements UserService {
         local.setUser(user);
         local.setIsRented(true);
         localRepository.save(local);
+    }
+
+    @Override
+    public void validateToken(ConfirmationToken token) {
+        if (token != null) {
+            User user = token.getUser();
+            user.setIsActive(true);
+            userRepository.save(user);
+        }
     }
 }

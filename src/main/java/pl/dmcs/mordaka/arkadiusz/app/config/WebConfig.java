@@ -6,6 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -16,6 +18,8 @@ import pl.dmcs.mordaka.arkadiusz.app.converter.BuildingToBuildingView;
 import pl.dmcs.mordaka.arkadiusz.app.converter.LocalToLocalView;
 import pl.dmcs.mordaka.arkadiusz.app.converter.RoleToRoleView;
 import pl.dmcs.mordaka.arkadiusz.app.converter.UserToUserView;
+
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
@@ -87,5 +91,23 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(buildingtoBuildingView);
         registry.addConverter(userToUserView);
         registry.addConverter(localToLocalView);
+    }
+
+    @Bean
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername("politechnika.test.dev@gmail.com");
+        mailSender.setPassword("Politechnika!2");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
     }
 }

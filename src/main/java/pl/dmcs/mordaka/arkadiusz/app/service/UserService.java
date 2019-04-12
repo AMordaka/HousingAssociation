@@ -1,5 +1,6 @@
 package pl.dmcs.mordaka.arkadiusz.app.service;
 
+import pl.dmcs.mordaka.arkadiusz.app.model.ConfirmationToken;
 import pl.dmcs.mordaka.arkadiusz.app.model.DTO.UserLocalDTO;
 import pl.dmcs.mordaka.arkadiusz.app.model.User;
 
@@ -20,4 +21,6 @@ public interface UserService {
     List<User> getActivatedUsers();
 
     void assignUserToLocal(UserLocalDTO dto);
+
+    void validateToken(ConfirmationToken token);
 }
