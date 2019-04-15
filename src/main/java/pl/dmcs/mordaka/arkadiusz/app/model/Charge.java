@@ -1,5 +1,6 @@
 package pl.dmcs.mordaka.arkadiusz.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class Charge extends BaseEntity {
     @Column(name = "FUND_RENOVATION")
     private Double foundRenovation;
 
+    @JsonBackReference
     @ManyToOne
     private Local local;
 }
